@@ -17,20 +17,9 @@ export interface UserType {
   name: string;
   email: string;
   password: string;
-  location: LocationType; // Assuming LocationType is defined elsewhere
-  role: Role; // Assuming Role is an enum or type defined elsewhere
-  certification?: CertificationType; // Optional field
-  volunteerLevel?: number; // Optional field
-}
-
-export interface UserType {
-  id: number;
-  name: string;
-  email: string;
+  location?: LocationType | null; // Assuming LocationType is defined elsewhere
   phoneNumber: string;
-  password: string;
-  location: LocationType; // Assuming LocationType is defined elsewhere
   role: Role; // Assuming Role is an enum or type defined elsewhere
-  certification?: CertificationType; // Assuming CertificationType is defined elsewhere, optional field
-  volunteerLevel?: number; // Optional field
+  certification?: CertificationType | null; // Optional field
+  volunteerLevel?: number | null; // Optional field
 }
