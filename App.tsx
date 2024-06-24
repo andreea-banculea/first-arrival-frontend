@@ -21,6 +21,7 @@ import { LocationProvider } from "./hooks/LocationContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider, useUser } from "./hooks/UserContext";
 import { EmergencyProvider } from "./hooks/EmergencyContext";
+import registerNNPushToken from 'native-notify';
 
 const NavigationHandler: React.FC = () => {
   const { setActiveRouteName } = useActiveRouteName();
@@ -43,8 +44,6 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const { user, loading } = useUser();
-  console.log("user", user);
-
   if (loading) {
     return <Text>Loading...</Text>; // Replace with a proper loading component if needed
   }
@@ -77,7 +76,8 @@ const AppNavigator = () => {
   );
 };
 
-function App() {
+export default function App() {
+   registerNNPushToken(22081, 'CskVox7GEbNREhcbeD6kmo');
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
@@ -92,4 +92,3 @@ function App() {
   );
 }
 
-export default App;

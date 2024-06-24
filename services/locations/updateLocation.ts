@@ -1,9 +1,15 @@
-import { UserType } from "../../types/User";
+import { EmergencyType } from "../../types/Emergency";
+import { LocationType } from "../../types/Location";
 import HttpClient from "../httpClient";
 
-export const createUser = async (user: UserType): Promise<UserType> => {
+export const updateLocation = async (
+  location: LocationType
+): Promise<LocationType> => {
   try {
-    const response = await HttpClient.base.post<UserType>("/users", user);
+    const response = await HttpClient.base.put<LocationType>(
+      `/locations`,
+      location
+    );
 
     if (response.status === 200) {
       return response.data;
@@ -19,6 +25,8 @@ export const createUser = async (user: UserType): Promise<UserType> => {
       // Something else happened
       console.error("Error", error.message);
     }
+    throw new Error("Could not create location");
   }
 
+  throw new Error("The API returned an unexpected response");
 };

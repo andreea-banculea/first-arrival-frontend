@@ -1,13 +1,16 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useActiveRouteName } from "../../routing/ActiveRouteContext";
-import DetailsFormScreen from "../details-form-screen/DetialsFormScreen";
-
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useGetUserById } from "../hooks/useGetUserById";
+import { useGetEmergencyById } from "../../emergency/hooks/useGetEmergencyById";
 import { UserType } from "../../types/User";
+import DetailsFormScreen from "../details-form-screen/DetialsFormScreen";
+import WebSocketService from "../../services/websocket/WebSocketService";
+import { useAcceptEmergency } from "../../emergency/hooks/useAcceptEmergency";
+import { LocationType } from "../../types/Location";
+import { useQueryClient } from "@tanstack/react-query";
 
 type RespondersOnMapScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -19,27 +22,55 @@ export default function RespondersOnMapScreen({
   route,
 }: RespondersOnMapScreenProps) {
   const { setActiveRouteName } = useActiveRouteName();
-  React.useEffect(() => {
-    setActiveRouteName("Responders On Map");
-  }, [setActiveRouteName]);
+  const [volunteersLocation, setVolunteersLocation] = useState<LocationType[]>(
+    []
+  );
+  const [volunteers, setVolunteers] = useState<UserType[]>([]);
 
-  const emergency = route.params.emergency;
-  console.log(route.params);
-  const emergencyLocation = route.params.emergency.location;
+  const initialEmergency = route.params.emergency;
+  const emergencyLocation = initialEmergency.location;
+  const { emergency, emergencyError, emergencyLoading, refetchEmergency } =
+    useGetEmergencyById(initialEmergency.id);
+
+  useEffect(() => {
+    setActiveRouteName("Responders On Map");
+    // WebSocketService(initialEmergency.id, setVolunteerLocation);
+  }, [initialEmergency.id, setActiveRouteName]);
+  // useEffect(() => {
+  //   if (emergency) {
+  //     console.log("Emergency volunteers", emergency.volunteersAccepted);
+  //     setVolunteers(emergency.volunteersAccepted);
+  //     console.log("Volunteers", volunteers);
+  //     const volunteersLocations: LocationType[] = [];
+  //     volunteers.map((volunteer) => {
+  //       if (volunteer.location) volunteersLocation.push(volunteer.location);
+  //       console.log("p------Non null location", volunteersLocation);
+  //     });
+  //     setVolunteersLocation(volunteersLocations);
+  //     console.log("asdgasdgfasdf s ----- asd-fa-sdf-a ---- Volunteers Location", volunteersLocation);
+  //   }
+  // }, [emergency]);
+
+  useEffect(() => {
+    if (emergency) {
+      setVolunteers(emergency.volunteersAccepted);
+
+      const locations: LocationType[] = emergency.volunteersAccepted
+        .filter((volunteer) => volunteer.location)
+        .map((volunteer) => volunteer.location as LocationType); // Assuming location is of type LocationType
+
+      setVolunteersLocation(locations);
+      console.log("Volunteers Location", locations);
+    }
+  }, [emergency?.volunteersAccepted, setActiveRouteName]);
+
+  // useEffect(() => {
+  //   refetchEmergency();
+  // });
 
   const handleDetailsFormPress = () => {
     navigation.navigate("Details Form", route.params);
   };
-
-  const users: UserType[] = []; 
-
-  emergency.volunteersAccepted.map((volunteer: UserType) => {
-    const {user, userError, userLoading} = useGetUserById(volunteer.id);
-    if (user) {
-      users.push(user);
-    }
-  }
-  );
 
   return (
     <View style={styles.container}>
@@ -47,13 +78,15 @@ export default function RespondersOnMapScreen({
         style={StyleSheet.absoluteFillObject}
         initialRegion={{
           latitude: emergencyLocation ? emergencyLocation.latitude : 37.78825,
-          longitude: emergencyLocation ? emergencyLocation.longitude : -122.4324,
+          longitude: emergencyLocation
+            ? emergencyLocation.longitude
+            : -122.4324,
           latitudeDelta: 0.018,
-          longitudeDelta: 0.018
+          longitudeDelta: 0.018,
         }}
       >
         {emergencyLocation && (
-          <Marker coordinate={emergencyLocation} title="Selected Location">
+          <Marker coordinate={emergencyLocation} title="Emergency Location">
             <View
               style={{
                 width: 60,
@@ -70,6 +103,29 @@ export default function RespondersOnMapScreen({
             </View>
           </Marker>
         )}
+        {volunteersLocation.map((volunteerLocation, index) => (
+          <Marker
+            coordinate={volunteerLocation}
+            title="Volunteer Location"
+
+          >
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                source={require("../../assets/volunteer-on-map-icon.png")}
+                style={{ width: "100%", height: "100%" }}
+                resizeMode="contain"
+                tintColor={'#c10202'}
+              />
+            </View>
+          </Marker>
+        ))}
       </MapView>
 
       <TouchableOpacity

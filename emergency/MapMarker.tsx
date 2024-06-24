@@ -1,12 +1,14 @@
 import React from "react";
+import { Image, View } from "react-native";
 import { Marker } from "react-native-maps";
-import { Image, View, Text } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation hook
-import EmergencyDetailScreen from "../details/EmergencyDetailScreen";
-import { useGetEmergencyById } from "./hooks/useGetEmergencyById";
 
-
-function MapMarker({ navigation, emergency }: { navigation: any, emergency: any }) {
+function MapMarker({
+  navigation,
+  emergency,
+}: {
+  navigation: any;
+  emergency: any;
+}) {
   // Hook to get the navigation object
   const goToEmergencyDetail = () => {
     navigation.navigate("Emergency", emergency); // Use the name of your screen as defined in your stack navigator

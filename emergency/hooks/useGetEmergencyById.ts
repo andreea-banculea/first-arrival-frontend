@@ -6,10 +6,13 @@ export const useGetEmergencyById = (id: number) => {
     data: emergency,
     error: emergencyError,
     isLoading: emergencyLoading,
+    refetch: refetchEmergency,
   } = useQuery({
-    queryKey: ["emergency", id],
+    queryKey: ["getEmergencies", id],
     queryFn: () => getEmergencyById(id),
+    refetchOnMount: true,
+    refetchInterval: 5000,
   });
 
-  return { emergency, emergencyError, emergencyLoading };
+  return { emergency, emergencyError, emergencyLoading, refetchEmergency };
 };

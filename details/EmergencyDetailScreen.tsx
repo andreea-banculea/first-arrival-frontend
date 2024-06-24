@@ -1,29 +1,25 @@
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import axios from "axios";
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
   Alert,
-  TouchableOpacity,
   FlatList,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { LinearGradient } from "expo-linear-gradient";
-import useGetLocation from "../hooks/useGetLocation";
-import axios from "axios";
-import { useActiveRouteName } from "../routing/ActiveRouteContext";
-import VictimsCard from "./components/VictimsCard";
-import SymptomsCard from "./components/SymptomsCard";
-import MedicalHistoryCard from "./components/MedicalHistoryCard";
-import AdditionalDataCard from "./components/AdditionalDataCard";
-import { styles } from "./EmergencyDetailScreen.styles";
-import SeverityCard from "./components/ServerityCard";
-import MedicationsCard from "./components/MedicamentationCard";
-import { useGetEmergencyById } from "../emergency/hooks/useGetEmergencyById";
-import { LocationContext } from "../hooks/LocationContext";
 import { getEmergencyOptionByText } from "../helpers/EmergencyOptions";
+import { LocationContext } from "../hooks/LocationContext";
+import { useActiveRouteName } from "../routing/ActiveRouteContext";
+import { styles } from "./EmergencyDetailScreen.styles";
+import AdditionalDataCard from "./components/AdditionalDataCard";
+import MedicalHistoryCard from "./components/MedicalHistoryCard";
+import MedicationsCard from "./components/MedicamentationCard";
+import SeverityCard from "./components/ServerityCard";
+import SymptomsCard from "./components/SymptomsCard";
+import VictimsCard from "./components/VictimsCard";
 
 export interface Coordinate {
   latitude: number;
@@ -33,6 +29,10 @@ export interface Coordinate {
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useAcceptEmergency } from "../emergency/hooks/useAcceptEmergency";
 import ReportedByCard from "./components/ReportedByCard";
+import { useQueryClient } from "@tanstack/react-query";
+import { useUpdateLocation } from "../emergency/hooks/useUpdateLocation";
+import { LocationType } from "../types/Location";
+import { useUser } from "../hooks/UserContext";
 
 type EmergencyDetailScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -44,6 +44,7 @@ export default function EmergencyDetailScreen({
   route,
 }: EmergencyDetailScreenProps) {
   const { setActiveRouteName } = useActiveRouteName();
+  const { user, loading } = useUser();
   const { location, address, fetchCurrentLocation } =
     useContext(LocationContext);
   useEffect(() => {
@@ -87,9 +88,17 @@ export default function EmergencyDetailScreen({
   };
 
   const { emergencyAccept } = useAcceptEmergency();
+  const { locationUpdate } = useUpdateLocation();
+  const updatedLocation: LocationType = {
+    id: user!.location!.id,
+    name: address!,
+    latitude: location!.coords.latitude,
+    longitude: location!.coords.longitude,
+  };
 
   const handleMarkerPress = (coord: Coordinate) => {
     emergencyAccept(emergency.id);
+    locationUpdate(updatedLocation);
     const startLoc = `${location?.coords.latitude},${location?.coords.longitude}`;
     const destinationLoc = `${coord.latitude},${coord.longitude}`;
     getDirections(startLoc, destinationLoc);
