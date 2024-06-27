@@ -1,12 +1,12 @@
-import React from "react";
+import * as Linking from "expo-linking";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { getActiveRouteName } from "./hooks/getActiveRouteName";
+import { createStackNavigator } from "@react-navigation/stack";
 import { Text } from "react-native";
 import {
   ActiveRouteProvider,
   useActiveRouteName,
 } from "./routing/ActiveRouteContext";
-import { createStackNavigator } from "@react-navigation/stack";
 import { DrawerRoute } from "./routing/DrawerRoute";
 import {
   StartScreen,
@@ -21,13 +21,28 @@ import { LocationProvider } from "./hooks/LocationContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { UserProvider, useUser } from "./hooks/UserContext";
 import { EmergencyProvider } from "./hooks/EmergencyContext";
-import registerNNPushToken from 'native-notify';
+import registerNNPushToken from "native-notify";
+import { getActiveRouteName } from "./hooks/getActiveRouteName";
+
+const Stack = createStackNavigator();
+
+const prefix = Linking.createURL("/");
+
+const linking = {
+  prefixes: [prefix],
+  config: {
+    screens: {
+      EmergencyDetail: 'emergency-detail/:emergency',
+    },
+  },
+};
 
 const NavigationHandler: React.FC = () => {
   const { setActiveRouteName } = useActiveRouteName();
 
   return (
     <NavigationContainer
+      linking={linking}
       onStateChange={(state) => {
         if (state) {
           const activeRouteName = getActiveRouteName(state);
@@ -40,10 +55,9 @@ const NavigationHandler: React.FC = () => {
   );
 };
 
-const Stack = createStackNavigator();
-
 const AppNavigator = () => {
   const { user, loading } = useUser();
+
   if (loading) {
     return <Text>Loading...</Text>; // Replace with a proper loading component if needed
   }
@@ -77,18 +91,19 @@ const AppNavigator = () => {
 };
 
 export default function App() {
-   registerNNPushToken(22081, 'CskVox7GEbNREhcbeD6kmo');
   const queryClient = new QueryClient();
+
+  registerNNPushToken(22081, "CskVox7GEbNREhcbeD6kmo");
+
   return (
     <QueryClientProvider client={queryClient}>
-      <LocationProvider>
-        <EmergencyProvider>
-          <UserProvider>
+      <UserProvider>
+        <LocationProvider>
+          <EmergencyProvider>
             <AppNavigator />
-          </UserProvider>
-        </EmergencyProvider>
-      </LocationProvider>
+          </EmergencyProvider>
+        </LocationProvider>
+      </UserProvider>
     </QueryClientProvider>
   );
 }
-

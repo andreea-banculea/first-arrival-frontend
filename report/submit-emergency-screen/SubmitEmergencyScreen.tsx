@@ -17,10 +17,29 @@ import { useCreateLocation } from "../hooks/useCreateLocation";
 import { reverseGeocode } from "../../hooks/reverseGeocode";
 import { useUser } from "../../hooks/UserContext";
 import { UserType } from "../../types/User";
+import axios from "axios"; // Import axios to send notification via native-notify
+import { registerForPushNotificationsAsync } from "../../notifications/registerForPushNotificationsAsync";
 
 type SubmitEmergencyScreenProps = {
   navigation: StackNavigationProp<any, any>;
   route: any;
+};
+const haversineDistance = (coords1, coords2) => {
+  const toRad = (x) => (x * Math.PI) / 180;
+  const R = 6371; // Radius of Earth in kilometers
+
+  const dLat = toRad(coords2.latitude - coords1.latitude);
+  const dLon = toRad(coords2.longitude - coords1.longitude);
+  const lat1 = toRad(coords1.latitude);
+  const lat2 = toRad(coords2.latitude);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c;
+
+  return distance;
 };
 
 export default function SubmitEmergencyScreen({
@@ -124,7 +143,37 @@ export default function SubmitEmergencyScreen({
       });
     });
 
-    const createdEmergency = await createEmergencyPromise;    
+    const createdEmergency = await createEmergencyPromise;
+
+    const distance = haversineDistance(
+      {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      },
+      {
+        latitude: markerLocation!.latitude,
+        longitude: markerLocation!.longitude,
+      }
+    ).toFixed(2);
+
+    // Send Push Notification using native-notify
+    const pushToken = await registerForPushNotificationsAsync();
+    if (pushToken) {
+      try {
+        await axios.post('https://app.nativenotify.com/api/notification', {
+          appId: 22081,
+          appToken: "CskVox7GEbNREhcbeD6kmo",
+          title: "New Emergency Alert!",
+          body: `An emergency has been reported ${distance} km away. Please respond.`,
+          pushData: { emergencyId: createdEmergency },
+          target: pushToken,
+          deepLink: `first-arrival://emergency-detail/${createdEmergency}` // Add deep link URL
+        });
+        console.log('Notification sent successfully');
+      } catch (error) {
+        console.error('Failed to send notification:', error);
+      }
+    }
 
     navigation.navigate("Ambulance", {
       emergency: createdEmergency,
@@ -157,7 +206,6 @@ export default function SubmitEmergencyScreen({
         initialRegion={{
           latitude: location ? location.coords.latitude : 37.78825,
           longitude: location ? location.coords.longitude : -122.4324,
-         
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}

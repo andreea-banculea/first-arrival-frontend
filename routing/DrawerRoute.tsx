@@ -7,7 +7,7 @@ const Drawer = createDrawerNavigator();
 
 export function DrawerRoute() {
   const { activeRouteName } = useActiveRouteName();
-  console.log(activeRouteName);
+  // console.log(activeRouteName);
   const hiddenHeaderRoutes = [
     "Emergency",
     "Report",

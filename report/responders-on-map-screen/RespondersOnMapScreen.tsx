@@ -1,16 +1,13 @@
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { useActiveRouteName } from "../../routing/ActiveRouteContext";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { useGetEmergencyById } from "../../emergency/hooks/useGetEmergencyById";
+import { useActiveRouteName } from "../../routing/ActiveRouteContext";
+import { LocationType } from "../../types/Location";
 import { UserType } from "../../types/User";
 import DetailsFormScreen from "../details-form-screen/DetialsFormScreen";
-import WebSocketService from "../../services/websocket/WebSocketService";
-import { useAcceptEmergency } from "../../emergency/hooks/useAcceptEmergency";
-import { LocationType } from "../../types/Location";
-import { useQueryClient } from "@tanstack/react-query";
 
 type RespondersOnMapScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -34,22 +31,7 @@ export default function RespondersOnMapScreen({
 
   useEffect(() => {
     setActiveRouteName("Responders On Map");
-    // WebSocketService(initialEmergency.id, setVolunteerLocation);
   }, [initialEmergency.id, setActiveRouteName]);
-  // useEffect(() => {
-  //   if (emergency) {
-  //     console.log("Emergency volunteers", emergency.volunteersAccepted);
-  //     setVolunteers(emergency.volunteersAccepted);
-  //     console.log("Volunteers", volunteers);
-  //     const volunteersLocations: LocationType[] = [];
-  //     volunteers.map((volunteer) => {
-  //       if (volunteer.location) volunteersLocation.push(volunteer.location);
-  //       console.log("p------Non null location", volunteersLocation);
-  //     });
-  //     setVolunteersLocation(volunteersLocations);
-  //     console.log("asdgasdgfasdf s ----- asd-fa-sdf-a ---- Volunteers Location", volunteersLocation);
-  //   }
-  // }, [emergency]);
 
   useEffect(() => {
     if (emergency) {
@@ -60,13 +42,8 @@ export default function RespondersOnMapScreen({
         .map((volunteer) => volunteer.location as LocationType); // Assuming location is of type LocationType
 
       setVolunteersLocation(locations);
-      console.log("Volunteers Location", locations);
     }
   }, [emergency?.volunteersAccepted, setActiveRouteName]);
-
-  // useEffect(() => {
-  //   refetchEmergency();
-  // });
 
   const handleDetailsFormPress = () => {
     navigation.navigate("Details Form", route.params);
@@ -104,11 +81,7 @@ export default function RespondersOnMapScreen({
           </Marker>
         )}
         {volunteersLocation.map((volunteerLocation, index) => (
-          <Marker
-            coordinate={volunteerLocation}
-            title="Volunteer Location"
-
-          >
+          <Marker coordinate={volunteerLocation} title="Volunteer Location">
             <View
               style={{
                 width: 40,
@@ -121,7 +94,7 @@ export default function RespondersOnMapScreen({
                 source={require("../../assets/volunteer-on-map-icon.png")}
                 style={{ width: "100%", height: "100%" }}
                 resizeMode="contain"
-                tintColor={'#c10202'}
+                tintColor={"#c10202"}
               />
             </View>
           </Marker>

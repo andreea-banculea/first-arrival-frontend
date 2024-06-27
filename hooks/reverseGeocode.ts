@@ -10,10 +10,10 @@ export const reverseGeocode = async (latitude, longitude) => {
       const address = response.data.results[0].formatted_address;
       return address;
     } else {
-      console.error('Geocoding failed:', response.data.status);
+      console.log('Geocoding failed:', response.data.status);
     }
   } catch (error) {
-    console.error('Geocoding error:', error);
+    console.log('Geocoding error:', error);
   }
 };
 
