@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingBottom:15,
     marginBottom:10,
+    height: 90,
   },
   icon: {
     marginRight: 10,  // Space between icon and text

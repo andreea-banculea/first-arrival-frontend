@@ -89,14 +89,15 @@ export default function EmergencyDetailScreen({
 
   const { emergencyAccept } = useAcceptEmergency();
   const { locationUpdate } = useUpdateLocation();
-  const updatedLocation: LocationType = {
-    id: user!.location!.id,
-    name: address!,
-    latitude: location!.coords.latitude,
-    longitude: location!.coords.longitude,
-  };
+
 
   const handleMarkerPress = (coord: Coordinate) => {
+    const updatedLocation: LocationType = {
+      id: user!.location!.id,
+      name: address!,
+      latitude: location!.coords.latitude,
+      longitude: location!.coords.longitude,
+    };
     emergencyAccept(emergency.id);
     locationUpdate(updatedLocation);
     const startLoc = `${location?.coords.latitude},${location?.coords.longitude}`;

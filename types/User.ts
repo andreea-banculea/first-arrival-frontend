@@ -12,6 +12,11 @@ export interface CertificationType {
   expirationDate: Date;
 }
 
+export interface VolunteerRequestType{
+  userId: number;
+  certificationCode: string;
+}
+
 export interface UserType {
   id: number;
   name: string;

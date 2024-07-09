@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text } from "react-native-paper";
 import BackButton from "../components/BackButton";
@@ -14,6 +14,10 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import { phoneNumberValidator } from "../helpers/phoneNumberValidator";
 import { Role, UserType } from "../types/User";
 import { useRegisterUser } from "./hooks/useRegisterUser";
+import { LocationContext } from "../hooks/LocationContext";
+import { useCreateLocation } from "../report/hooks/useCreateLocation";
+import { reverseGeocode } from "../hooks/reverseGeocode";
+import { LocationType } from "../types/Location";
 
 export default function RegisterScreen({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
@@ -21,7 +25,28 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState({ value: "", error: "" });
   const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
   const { userCreate } = useRegisterUser();
-  const onSignUpPressed = () => {
+  const { location, address, fetchCurrentLocation } = useContext(LocationContext);
+  const { locationCreate } = useCreateLocation();
+  
+  const onSignUpPressed = async () => {
+    const address = await reverseGeocode(
+      location!.coords.latitude,
+      location!.coords.longitude
+    );
+    const newLocation: LocationType = {
+      id: 0,
+      name: address as unknown as string,
+      latitude: location!.coords.latitude,
+      longitude: location!.coords.longitude,
+    };
+
+    const createLocationPromise = new Promise<LocationType>((resolve, reject) => {
+      locationCreate(newLocation, {
+        onSuccess: (data) => resolve(data),
+        onError: (error) => reject(error),
+      });
+    });
+    const createdLocation = await createLocationPromise;
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -41,7 +66,7 @@ export default function RegisterScreen({ navigation }) {
       email: email.value,
       password: password.value,
       phoneNumber: phoneNumber.value,
-      location: null, // Assuming LocationType is defined elsewhere
+      location: createdLocation, // Assuming LocationType is defined elsewhere
       role: Role.USER, // Assuming Role is an enum or type defined elsewhere
       certification: null, // Optional field
       volunteerLevel: null, // Optional field

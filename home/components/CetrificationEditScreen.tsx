@@ -7,8 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { CertificationType } from "../../types/User";
+import { CertificationType, VolunteerRequestType } from "../../types/User";
 import { useActiveRouteName } from "../../routing/ActiveRouteContext";
+import { useVolunteerRequest } from "../hooks/useVolunteerRequest";
 
 export const CertificationEditPage = ({ navigation, route }) => {
   const user = route.params;
@@ -20,9 +21,23 @@ export const CertificationEditPage = ({ navigation, route }) => {
   useEffect(() => {
     setActiveRouteName("Certification");
   }, [setActiveRouteName]);
-
+console.log(user);
+  const { requestVolunteer, requestVolunteerError } = useVolunteerRequest();
   const handleSave = () => {
-    // Logic to save the certification code, e.g., make an API call  };
+    const volunteerRequest:VolunteerRequestType = {
+      userId: user.id,
+      certificationCode: certificationCode,
+    };
+
+    requestVolunteer(volunteerRequest,{
+      onSuccess: (data: CertificationType) => {
+        navigation.navigate("Profile");
+      },
+      onError: (error: any) => {
+        console.error("Error requesting volunteer", error);
+      },
+    
+    });
   };
   return (
     <SafeAreaView style={styles.container}>

@@ -23,6 +23,8 @@ import { UserProvider, useUser } from "./hooks/UserContext";
 import { EmergencyProvider } from "./hooks/EmergencyContext";
 import registerNNPushToken from "native-notify";
 import { getActiveRouteName } from "./hooks/getActiveRouteName";
+import { registerForPushNotificationsAsync } from "./notifications/registerForPushNotificationsAsync";
+import { useSaveToken } from "./hooks/useSaveToken";
 
 const Stack = createStackNavigator();
 
@@ -32,7 +34,7 @@ const linking = {
   prefixes: [prefix],
   config: {
     screens: {
-      EmergencyDetail: 'emergency-detail/:emergency',
+      EmergencyDetail: "emergency-detail/:emergency",
     },
   },
 };
@@ -57,6 +59,13 @@ const NavigationHandler: React.FC = () => {
 
 const AppNavigator = () => {
   const { user, loading } = useUser();
+  const { tokenSave, tokenSaveError } = useSaveToken();
+
+  useEffect(() => {
+    if (!loading && user) {
+      registerForPushNotificationsAsync(user.id, tokenSave);
+    }
+  }, [loading, user, tokenSave]);
 
   if (loading) {
     return <Text>Loading...</Text>; // Replace with a proper loading component if needed

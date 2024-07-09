@@ -19,6 +19,7 @@ import { useUser } from "../../hooks/UserContext";
 import { UserType } from "../../types/User";
 import axios from "axios"; // Import axios to send notification via native-notify
 import { registerForPushNotificationsAsync } from "../../notifications/registerForPushNotificationsAsync";
+import { useNotifyEmergency } from "../hooks/useNotifyEmergency";
 
 type SubmitEmergencyScreenProps = {
   navigation: StackNavigationProp<any, any>;
@@ -97,6 +98,7 @@ export default function SubmitEmergencyScreen({
 
   const { emergencyCreate } = useCreateEmergency();
   const { locationCreate } = useCreateLocation();
+  const {emergencyNotify} = useNotifyEmergency();
 
   const handleAlertPress = async () => {
     const address = await reverseGeocode(
@@ -145,36 +147,9 @@ export default function SubmitEmergencyScreen({
 
     const createdEmergency = await createEmergencyPromise;
 
-    const distance = haversineDistance(
-      {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      },
-      {
-        latitude: markerLocation!.latitude,
-        longitude: markerLocation!.longitude,
-      }
-    ).toFixed(2);
-
-    // Send Push Notification using native-notify
-    const pushToken = await registerForPushNotificationsAsync();
-    if (pushToken) {
-      try {
-        await axios.post('https://app.nativenotify.com/api/notification', {
-          appId: 22081,
-          appToken: "CskVox7GEbNREhcbeD6kmo",
-          title: "New Emergency Alert!",
-          body: `An emergency has been reported ${distance} km away. Please respond.`,
-          pushData: { emergencyId: createdEmergency },
-          target: pushToken,
-          deepLink: `first-arrival://emergency-detail/${createdEmergency}` // Add deep link URL
-        });
-        console.log('Notification sent successfully');
-      } catch (error) {
-        console.error('Failed to send notification:', error);
-      }
-    }
-
+    // Notify emergency
+    emergencyNotify(createdEmergency);
+    
     navigation.navigate("Ambulance", {
       emergency: createdEmergency,
     });

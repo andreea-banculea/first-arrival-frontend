@@ -11,6 +11,7 @@ import { ReportEmergencyScreen } from "../emergency-type-screen/ReportEmergencyS
 import SubmitEmergencyScreen from "../submit-emergency-screen/SubmitEmergencyScreen";
 import RespondersOnMapScreen from "../responders-on-map-screen/RespondersOnMapScreen"; // Add this line
 import AdressCard from "./AdressCard";
+import { StatusBar } from "expo-status-bar";
 
 export default function SOSScreen({ navigation }) {
   const { emergency, refetch } = useEmergency();
@@ -30,6 +31,7 @@ export default function SOSScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
       <Text style={styles.header}>Are you in a emergency?</Text>
       <Text style={styles.text}>
         Press the button below and help will reach you soon.
@@ -58,6 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: -50,
   },
   header: {
     fontSize: 30,
@@ -85,6 +88,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 50,
+    marginBottom:50
   },
   shadowLayer: {
     borderRadius: 150,

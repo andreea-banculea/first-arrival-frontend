@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5'; // Importing FontAwes
 const ReportedByCard = ({ reportedBy }) => {
   
   const handleCallPress = (phoneNumber:string) => {
+    if(!phoneNumber) return Alert.alert('Error', 'Phone number not found');
     const url = `tel:${phoneNumber}`;
     Linking.canOpenURL(url)
       .then((supported) => {
@@ -29,9 +30,9 @@ const ReportedByCard = ({ reportedBy }) => {
         />
         <View style={styles.textContainer}>
           <Text style={styles.label}>Reported by </Text>
-          <Text style={styles.valueText}>{reportedBy.name}</Text>
+          <Text style={styles.valueText}>{reportedBy? reportedBy.name: "Unknown user"}</Text>
         </View>
-        <TouchableOpacity style={styles.callButton} onPress={() => handleCallPress(reportedBy.phoneNumber)}>
+        <TouchableOpacity style={styles.callButton} onPress={() => handleCallPress(reportedBy? reportedBy.name: null)}>
           <Icon 
             name="phone" 
             size={24} 

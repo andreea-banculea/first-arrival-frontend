@@ -57,7 +57,7 @@ const GoogleUp = () => {
   //   };
 
   async function exchangeCodeForToken(code: any) {
-    const response = await fetch("https://localhost:8080/login", {
+    const response = await fetch("https://sql-db-427816.ew.r.appspot.com//login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
