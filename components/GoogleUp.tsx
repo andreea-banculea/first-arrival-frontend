@@ -12,61 +12,6 @@ WebBrowser.maybeCompleteAuthSession();
 
 const GoogleUp = () => {
   const [userInfo, setUserInfo] = React.useState(null);
-  //   const [request, response, promptAsync] = Google.useAuthRequest({
-  //     webClientId:
-  //       "493627146657-8h2gn5cukqb2gtl7ntq3rrha5mlgd408.apps.googleusercontent.com",
-  //     androidClientId:
-  //       "493627146657-hglo6ttjeruvbbdm7chf5ab4hhrtvboc.apps.googleusercontent.com",
-  //     iosClientId:
-  //       "493627146657-4ell7rm6vq2ndpghgvjvqik3lk6o6vp3.apps.googleusercontent.com",
-  //   });
-
-
-
-  //   React.useEffect(() => {
-  //     handleSignInWithGoogle;
-  //   }, [response]);
-
-  //   async function handleSignInWithGoogle() {
-  //     const user = await AsyncStorage.getItem("@user");
-  //     if (!user) {
-  //       if (response?.type === "success") {
-  //         await getUserInfo(response.authentication.accessToken);
-  //       }
-  //     } else {
-  //       setUserInfo(JSON.parse(user));
-  //     }
-  //   }
-
-  //   const getUserInfo = async (token) => {
-  //     if (!token) return;
-  //     try {
-  //       const response = await fetch(
-  //         "https://www.googleapis.com/userinfo/v2/me",
-  //         {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         }
-  //       );
-
-  //       const user = await response.json();
-  //       await AsyncStorage.setItem("@user", JSON.stringify(user));
-  //       setUserInfo(user);
-  //     } catch (error) {
-  //       //handle
-  //     }
-  //   };
-
-  async function exchangeCodeForToken(code: any) {
-    const response = await fetch("https://sql-db-427816.ew.r.appspot.com//login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code }),
-    });
-
-    const { accessToken, refreshToken } = await response.json();
-  }
 
   const navigation = useNavigation();
   const YOUR_CLIENT_ID =
@@ -114,14 +59,6 @@ const GoogleUp = () => {
         <Text> Login with Microsoft</Text>
       </View>
     </View>
-    // <View style={styles.container}>
-    //   <TouchableOpacity onPress={handlePress}>
-    //     <View style={styles.circle}>
-    //       <Text style={styles.text}>G</Text>
-    //       {/* <Text style={styles.text}>{JSON.stringify(userInfo)}</Text> */}
-    //     </View>
-    //   </TouchableOpacity>
-    // </View>
   );
 };
 

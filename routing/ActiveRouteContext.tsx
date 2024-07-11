@@ -2,11 +2,11 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ActiveRouteContextType {
   activeRouteName: string;
-  setActiveRouteName: (routeName: string) => void; // Correctly typed setter function
+  setActiveRouteName: (routeName: string) => void; 
 }
 
 interface ProviderProps {
-  children: ReactNode;  // Typing for children props
+  children: ReactNode;  
 }
 
 const ActiveRouteContext = createContext<ActiveRouteContextType | undefined>(undefined);

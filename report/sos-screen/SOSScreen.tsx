@@ -9,7 +9,7 @@ import AmbulanceScreen from "../ambulance-screen/AmbulanceScreen";
 import DetailsFormScreen from "../details-form-screen/DetialsFormScreen";
 import { ReportEmergencyScreen } from "../emergency-type-screen/ReportEmergencyScreen";
 import SubmitEmergencyScreen from "../submit-emergency-screen/SubmitEmergencyScreen";
-import RespondersOnMapScreen from "../responders-on-map-screen/RespondersOnMapScreen"; // Add this line
+import RespondersOnMapScreen from "../responders-on-map-screen/RespondersOnMapScreen"; 
 import AdressCard from "./AdressCard";
 import { StatusBar } from "expo-status-bar";
 
@@ -42,7 +42,7 @@ export default function SOSScreen({ navigation }) {
             <LinearGradient
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
-              colors={["#7a2d2e", "#d60202"]} // Example gradient colors
+              colors={["#7a2d2e", "#d60202"]} 
               style={styles.button}
             >
               <Text style={styles.buttonText}>SOS</Text>

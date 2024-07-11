@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Card } from 'react-native-paper';
-import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; // Import MaterialIcons for the delete icon
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import { StyleSheet } from 'react-native';
 import { MedicalHistoryPredefined } from '../../../helpers/MedicalHistoryPredefined';
 
@@ -19,7 +19,7 @@ const medicalHistoryIcons: Record<string, string> = {
   "Cancer": "ribbon",
   "Organ Transplant": "hand-holding-heart",
   "Mental Health Conditions": "brain",
-  "Other": "plus", // Default icon for other conditions
+  "Other": "plus", 
 };
 
 const predefinedConditions = MedicalHistoryPredefined
@@ -132,12 +132,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     marginVertical: 5,
-    justifyContent: "space-between", // To keep delete button on the right
+    justifyContent: "space-between", 
   },
   itemContent: {
     flexDirection: "row",
     alignItems: "center",
-    flex: 1, // Make the item content take up all available space
+    flex: 1, 
   },
   checkedItem: {
     backgroundColor: "teal",

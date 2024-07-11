@@ -33,7 +33,7 @@ const VictimsCard = ({ open, value, items, setOpen, setValue, setItems }: {
           setValue={setValue}
           setItems={setItems}
           containerStyle={styles.dropdown}
-          zIndex={5000} // Ensures the dropdown appears above other components
+          zIndex={5000} 
         />
       </Card>
     </View>
@@ -70,6 +70,6 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   dropdown: {
-    zIndex: 5000, // Ensures the dropdown appears above other components
+    zIndex: 5000, 
   },
 });

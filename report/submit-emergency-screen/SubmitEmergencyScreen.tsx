@@ -10,15 +10,13 @@ import AmbulanceScreen from "../ambulance-screen/AmbulanceScreen";
 import { ReportEmergencyScreen } from "../emergency-type-screen/ReportEmergencyScreen";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useCreateEmergency } from "../hooks/useCreateEmergency";
-import { EmergencyType, StatusEnum } from "../../types/Emergency";
-import { LocationType } from "../../types/Location";
-import { useCreateLocation } from "../hooks/useCreateLocation";
 import { reverseGeocode } from "../../hooks/reverseGeocode";
 import { useUser } from "../../hooks/UserContext";
+import { EmergencyType, StatusEnum } from "../../types/Emergency";
+import { LocationType } from "../../types/Location";
 import { UserType } from "../../types/User";
-import axios from "axios"; // Import axios to send notification via native-notify
-import { registerForPushNotificationsAsync } from "../../notifications/registerForPushNotificationsAsync";
+import { useCreateEmergency } from "../hooks/useCreateEmergency";
+import { useCreateLocation } from "../hooks/useCreateLocation";
 import { useNotifyEmergency } from "../hooks/useNotifyEmergency";
 
 type SubmitEmergencyScreenProps = {
@@ -27,7 +25,7 @@ type SubmitEmergencyScreenProps = {
 };
 const haversineDistance = (coords1, coords2) => {
   const toRad = (x) => (x * Math.PI) / 180;
-  const R = 6371; // Radius of Earth in kilometers
+  const R = 6371; 
 
   const dLat = toRad(coords2.latitude - coords1.latitude);
   const dLon = toRad(coords2.longitude - coords1.longitude);
@@ -75,7 +73,7 @@ export default function SubmitEmergencyScreen({
       const firstMarkerLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.005, // Set zoom level
+        latitudeDelta: 0.005, 
         longitudeDelta: 0.005,
       };
       setMarkerLocation(firstMarkerLocation);
@@ -88,7 +86,7 @@ export default function SubmitEmergencyScreen({
       const newLocation = {
         latitude: details.geometry.location.lat,
         longitude: details.geometry.location.lng,
-        latitudeDelta: 0.005, // Set zoom level
+        latitudeDelta: 0.005, 
         longitudeDelta: 0.005,
       };
       setMarkerLocation(newLocation);
@@ -98,7 +96,7 @@ export default function SubmitEmergencyScreen({
 
   const { emergencyCreate } = useCreateEmergency();
   const { locationCreate } = useCreateLocation();
-  const {emergencyNotify} = useNotifyEmergency();
+  const { emergencyNotify } = useNotifyEmergency();
 
   const handleAlertPress = async () => {
     const address = await reverseGeocode(
@@ -112,20 +110,21 @@ export default function SubmitEmergencyScreen({
       longitude: markerLocation!.longitude,
     };
 
-    const createLocationPromise = new Promise<LocationType>((resolve, reject) => {
-      locationCreate(newLocation, {
-        onSuccess: (data) => resolve(data),
-        onError: (error) => reject(error),
-      });
-    });
+    const createLocationPromise = new Promise<LocationType>(
+      (resolve, reject) => {
+        locationCreate(newLocation, {
+          onSuccess: (data) => resolve(data),
+          onError: (error) => reject(error),
+        });
+      }
+    );
 
-    // Await the resolution of the location creation
     const createdLocation = await createLocationPromise;
 
     const newEmergency: EmergencyType = {
       id: 0,
       location: createdLocation,
-      reportedBy: user || {} as UserType,
+      reportedBy: user || ({} as UserType),
       emergencyType: route.params.emergencyType.text,
       status: StatusEnum.pending,
       timestamp: new Date().toISOString(),
@@ -138,18 +137,19 @@ export default function SubmitEmergencyScreen({
       volunteersAccepted: [],
     };
 
-    const createEmergencyPromise = new Promise<EmergencyType>((resolve, reject) => {
-      emergencyCreate(newEmergency, {
-        onSuccess: (data) => resolve(data),
-        onError: (error) => reject(error),
-      });
-    });
+    const createEmergencyPromise = new Promise<EmergencyType>(
+      (resolve, reject) => {
+        emergencyCreate(newEmergency, {
+          onSuccess: (data) => resolve(data),
+          onError: (error) => reject(error),
+        });
+      }
+    );
 
     const createdEmergency = await createEmergencyPromise;
 
-    // Notify emergency
     emergencyNotify(createdEmergency);
-    
+
     navigation.navigate("Ambulance", {
       emergency: createdEmergency,
     });
@@ -163,7 +163,7 @@ export default function SubmitEmergencyScreen({
       const firstMarkerLocation = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
-        latitudeDelta: 0.005, // Set zoom level
+        latitudeDelta: 0.005, 
         longitudeDelta: 0.005,
       };
       setMarkerLocation(firstMarkerLocation);
@@ -199,7 +199,7 @@ export default function SubmitEmergencyScreen({
           location: location
             ? `${location.coords.latitude},${location.coords.longitude}`
             : undefined,
-          radius: 50000, // 50 km radius
+          radius: 50000, 
         }}
         styles={{
           textInputContainer: styles.textInputContainer,
@@ -299,8 +299,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 3, // for Android shadow
-    shadowColor: "#000", // for iOS shadow
+    elevation: 3, 
+    shadowColor: "#000", 
     shadowOffset: {
       width: 0,
       height: 2,
@@ -334,16 +334,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icon: {
-    marginRight: 10, // Space between icon and text
+    marginRight: 10, 
   },
   textContainer: {
-    flexDirection: "column", // Stack texts vertically
+    flexDirection: "column", 
   },
   cardheader: {
     fontWeight: "bold",
     fontSize: 16,
     color: "#333",
-    marginBottom: 5, // Space between header and address text
+    marginBottom: 5, 
   },
   cardtext: {
     fontSize: 16,

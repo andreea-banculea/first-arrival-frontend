@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Card } from 'react-native-paper';
-import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; // Import MaterialIcons for the delete icon
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 import { StyleSheet } from 'react-native';
 
 const MedicationsCard = ({
@@ -106,14 +106,14 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderColor: "#ccc",
       marginVertical: 5,
-      justifyContent: "space-between", // To keep delete button on the right
+      justifyContent: "space-between", 
     },
     itemContent: {
       flexDirection: "row",
       alignItems: "center",
     },
     checkedItem: {
-      backgroundColor: "#3c3ab5", // Light blue background
+      backgroundColor: "#3c3ab5",
       borderColor: "#3c3ab5",
     },
     checkboxLabel: {

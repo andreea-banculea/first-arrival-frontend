@@ -39,7 +39,7 @@ export default function RespondersOnMapScreen({
 
       const locations: LocationType[] = emergency.volunteersAccepted
         .filter((volunteer) => volunteer.location)
-        .map((volunteer) => volunteer.location as LocationType); // Assuming location is of type LocationType
+        .map((volunteer) => volunteer.location as LocationType);
 
       setVolunteersLocation(locations);
     }
@@ -145,8 +145,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 3, // for Android shadow
-    shadowColor: "#000", // for iOS shadow
+    elevation: 3, 
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

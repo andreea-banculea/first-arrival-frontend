@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5'; // Importing FontAwesome5 icons
+import Icon from 'react-native-vector-icons/FontAwesome5'; 
 
 const SymptomsCard = ({ description }) => {
   return (
@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'row',
-    alignItems: 'flex-start', // Align items to the top
+    alignItems: 'flex-start', 
   },
   icon: {
     marginRight: 15,
     color: "#FF8A65"
   },
   textContainer: {
-    flex: 1, // Allow text container to take up remaining space
+    flex: 1, 
   },
   label: {
     fontSize: 18,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
-    flexWrap: 'wrap', // Ensure text wraps properly
+    flexWrap: 'wrap', 
   },
 });
 

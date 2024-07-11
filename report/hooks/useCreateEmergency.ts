@@ -10,7 +10,6 @@ export const useCreateEmergency = () => {
     mutationFn: (emergency: EmergencyType) => createEmergency(emergency),
     onSuccess: () => {
       queryClient.invalidateQueries("emergencies");
-      // queryClient.invalidateQueries("hasAnActiveEmergencyReported");
     },
   });
 

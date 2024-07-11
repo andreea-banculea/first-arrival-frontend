@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5'; // Importing FontAwesome5 icons
+import Icon from 'react-native-vector-icons/FontAwesome5';  
 
 const AdditionalDataCard = ({ additionalData }: { additionalData: string }) => {
   return (
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
-    flexWrap: 'wrap', // Ensure text wraps properly
+    flexWrap: 'wrap',
   },
 });
 

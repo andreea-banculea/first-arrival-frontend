@@ -43,7 +43,7 @@ export default function AmbulanceScreen({
         });
         setTimeout(() => {
           navigation.navigate("ReportFirst");
-        }, 2000); // Add a slight delay
+        }, 2000); 
       },
       onError: (error) => {
         console.error("Error canceling emergency request:", error);
@@ -55,7 +55,7 @@ export default function AmbulanceScreen({
   return (
     <LinearGradient colors={["#7a2d2e", "#d60202"]} style={styles.container}>
       <Image
-        source={require("../../assets/ambulance-icon.png")} // Ensure you have an ambulance image in your assets folder
+        source={require("../../assets/ambulance-icon.png")} 
         style={styles.image}
       />
       <Text style={styles.title}>Ambulance and responders were alarmed</Text>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { Card } from 'react-native-paper';
-import { FontAwesome5 } from '@expo/vector-icons'; // Import FontAwesome5 for the icons
+import { FontAwesome5 } from '@expo/vector-icons'; 
 import { StyleSheet } from 'react-native';
 
 const AdditionalDataCard = ({ additionalData, setAdditionalData }: { additionalData: string, setAdditionalData: (data: string) => void }) => {

@@ -1,4 +1,3 @@
-// VolunteerLocationContext.js
 import React, { createContext, useEffect, useState } from "react";
 import * as Location from "expo-location";
 
@@ -23,7 +22,6 @@ const VolunteerLocationProvider = ({ children }) => {
         },
         (location) => {
           setLocation(location);
-          // Send location to backend
           sendLocationToBackend(location);
         }
       );

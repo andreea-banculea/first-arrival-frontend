@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5'; // Importing FontAwesome5 icons
+import Icon from 'react-native-vector-icons/FontAwesome5'; 
 import { medicalHistoryIcons, separateConditions } from '../../helpers/MedicalHistoryPredefined';
 
 interface MedicalHistoryCardProps {

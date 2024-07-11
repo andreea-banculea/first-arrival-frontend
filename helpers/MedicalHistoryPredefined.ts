@@ -28,7 +28,7 @@ export const medicalHistoryIcons = {
   "Cancer": "ribbon",
   "Organ Transplant": "hand-holding-heart",
   "Mental Health Conditions": "brain",
-  "Other": "plus" // Default icon for other conditions
+  "Other": "plus" 
 };
 
  function isConditionInList(condition: string) {

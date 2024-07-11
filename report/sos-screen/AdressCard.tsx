@@ -40,16 +40,16 @@ const styles = StyleSheet.create({
     height: 90,
   },
   icon: {
-    marginRight: 10,  // Space between icon and text
+    marginRight: 10, 
   },
   textContainer: {
-    flexDirection: "column",  // Stack texts vertically
+    flexDirection: "column",  
   },
   header: {
     fontWeight: "bold",
     fontSize: 16,
     color: "#333",
-    marginBottom: 5,  // Space between header and address text
+    marginBottom: 5,
   },
   text: {
     fontSize: 16,

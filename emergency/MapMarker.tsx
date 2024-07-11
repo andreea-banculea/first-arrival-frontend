@@ -9,9 +9,9 @@ function MapMarker({
   navigation: any;
   emergency: any;
 }) {
-  // Hook to get the navigation object
+
   const goToEmergencyDetail = () => {
-    navigation.navigate("Emergency", emergency); // Use the name of your screen as defined in your stack navigator
+    navigation.navigate("Emergency", emergency); 
   };
 
   return (

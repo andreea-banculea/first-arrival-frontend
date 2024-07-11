@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    flex: 1, //the container will fill the whole screen.
+    flex: 1, 
     justifyContent: "flex-end",
     alignItems: "center",
   },
@@ -18,8 +18,8 @@ export const styles = StyleSheet.create({
     marginTop: 20,
     alignItems: "center",
     justifyContent: "center",
-    elevation: 3, // for Android shadow
-    shadowColor: "#000", // for iOS shadow
+    elevation: 3,
+    shadowColor: "#000", 
     shadowOffset: {
       width: 0,
       height: 2,

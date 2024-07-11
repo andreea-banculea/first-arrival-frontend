@@ -12,12 +12,6 @@ export default function useGetLocation() {
   useEffect(() => {
     (async () => {
       try {
-        // if (!Device.isDevice) {
-        //   setErrorMsg(
-        //     "Oops, this will not work on Snack in an Android Emulator. Try it on your device!"
-        //   );
-        //   return;
-        // }
       } catch (err) {
         console.error(err);
       }

@@ -49,7 +49,6 @@ function ProfileScreen({ navigation }: { navigation: NavigationProp<any> }) {
   };
 
   const handleCodeSubmit = () => {
-    // Submit the code to the backend or update the state
     setIsEditing(false);
   };
 
@@ -59,7 +58,7 @@ function ProfileScreen({ navigation }: { navigation: NavigationProp<any> }) {
       await handleLogout();
       await refetchUser();
     } catch (error) {
-      // console.error('Error logging out:', error);
+       console.log('Error logging out:', error);
     }
   };
 
@@ -154,7 +153,7 @@ function ProfileScreen({ navigation }: { navigation: NavigationProp<any> }) {
             />
             <TextInput
               style={styles.input}
-              value={code.toString()} // Convert the value to a string
+              value={code.toString()} 
               editable={isEditing}
               onChangeText={handleCodeChange}
               onSubmitEditing={handleCodeSubmit}
@@ -265,7 +264,6 @@ function HomeStackScreen() {
       <ProfileStack.Screen
         name="Certification"
         component={CertificationEditPage}
-        // options={{ headerShown: false }}
       />
     </ProfileStack.Navigator>
   );

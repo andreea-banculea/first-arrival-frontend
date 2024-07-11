@@ -8,7 +8,6 @@ export type MedicalHistoryType = {
 
 export enum StatusEnum {
   pending = "PENDING",
-  // etc
 }
 
 export enum SeverityEnum {

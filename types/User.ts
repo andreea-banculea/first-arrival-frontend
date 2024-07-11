@@ -22,9 +22,9 @@ export interface UserType {
   name: string;
   email: string;
   password: string;
-  location?: LocationType | null; // Assuming LocationType is defined elsewhere
+  location?: LocationType | null; 
   phoneNumber: string;
-  role: Role; // Assuming Role is an enum or type defined elsewhere
-  certification?: CertificationType | null; // Optional field
-  volunteerLevel?: number | null; // Optional field
+  role: Role; 
+  certification?: CertificationType | null; 
+  volunteerLevel?: number | null;
 }

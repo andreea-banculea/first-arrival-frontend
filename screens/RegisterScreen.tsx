@@ -66,10 +66,10 @@ export default function RegisterScreen({ navigation }) {
       email: email.value,
       password: password.value,
       phoneNumber: phoneNumber.value,
-      location: createdLocation, // Assuming LocationType is defined elsewhere
-      role: Role.USER, // Assuming Role is an enum or type defined elsewhere
-      certification: null, // Optional field
-      volunteerLevel: null, // Optional field
+      location: createdLocation, 
+      role: Role.USER, 
+      certification: null, 
+      volunteerLevel: null, 
     };
 
     userCreate(user, {

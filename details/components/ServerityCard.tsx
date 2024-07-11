@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
-import Icon from "react-native-vector-icons/FontAwesome5"; // Importing FontAwesome5 icons
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 const severityLevels = ["Low", "Medium", "High", ""];
-const severityIcons = ["info-circle", "exclamation-triangle", "heartbeat", "exclamation-triangle"]; // Icons for each severity level
-const severityColors = ["#FFCDD2", "#FF8A65", "#D32F2F", "#FF8A65"]; // Lighter red shades to very bad red shade
+const severityIcons = ["info-circle", "exclamation-triangle", "heartbeat", "exclamation-triangle"]; 
+const severityColors = ["#FFCDD2", "#FF8A65", "#D32F2F", "#FF8A65"]; 
 
 const SeverityCard = ({ severity }: { severity: string }) => {
   let severityIndex;
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
-    borderWidth: 2, // Border to indicate severity level
+    borderWidth: 2, 
   },
   cardContent: {
     flexDirection: "row",

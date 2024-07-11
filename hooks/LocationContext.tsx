@@ -75,8 +75,8 @@ const LocationProvider: React.FC<LocationProviderProps> = ({ children }) => {
       await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
-          timeInterval: 10000, // Update every 10 seconds
-          distanceInterval: 30, // Update every 10 meters
+          timeInterval: 10000,
+          distanceInterval: 30, 
         },
         async (location) => {
           const newAddress = await reverseGeocode(location.coords.latitude, location.coords.longitude);

@@ -23,8 +23,7 @@ export const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'space-between', // This will push the arrow icon to the edge
-    backgroundColor: "#fff",
+    justifyContent: 'space-between', 
     marginBottom: 10,
     marginHorizontal: 20,
     paddingHorizontal: 16,
@@ -37,13 +36,12 @@ export const styles = StyleSheet.create({
     elevation: 3,
   },
   iconWrapper: {
-    paddingVertical: 11, // Adjust as necessary
-    paddingHorizontal: 15, // Adjust as necessary
-    borderRadius: 15, // Rounded corners, adjust for your design
+    paddingVertical: 11, 
+    paddingHorizontal: 15, 
+    borderRadius: 15, 
     marginRight: 20,
-    alignItems: "center", // Center the icon horizontally
-    justifyContent: "center", // Center the icon vertically
-    // Add shadow if needed, adjust for your design
+    alignItems: "center", 
+    justifyContent: "center", 
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,
@@ -58,11 +56,11 @@ export const styles = StyleSheet.create({
     
   },
   text: {
-    flex: 1, // Text takes up the maximum amount of space
+    flex: 1,
     fontWeight: "600",
     fontSize: 16,
     color: "#000000",
-    marginRight: 10, // Give some space before the arrow
+    marginRight: 10, 
   },
   arrow: {
     width: 20,

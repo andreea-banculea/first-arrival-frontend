@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f2f2f2", // Light grey background for better contrast
+    backgroundColor: "#f2f2f2", 
   },
   scrollViewContent: {
     padding: 20,
-    paddingBottom: 150, // Ensure there is enough padding at the bottom for the button
+    paddingBottom: 150, 
     marginHorizontal:-5,
   },
   title: {
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: "#b30000", // Use a color that indicates urgency
+    backgroundColor: "#b30000", 
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 20,
