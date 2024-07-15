@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { hasAnActiveEmergencyReported } from "../../services/emergencies/hasAnActiveEmergencyReported";
 
-export const useHasAnActiveEmergencyReported = () => {
+export const useHasAnActiveEmergencyReported = (shouldFetch: boolean) => {
   const {
     data: emergency,
     error: emergencyError,
@@ -10,6 +10,7 @@ export const useHasAnActiveEmergencyReported = () => {
   } = useQuery({
     queryKey: ["hasAnActiveEmergencyReported"],
     queryFn: hasAnActiveEmergencyReported,
+    enabled: shouldFetch, // Only enable the query if shouldFetch is true
     refetchOnMount: true,
     refetchOnWindowFocus: true,
   });

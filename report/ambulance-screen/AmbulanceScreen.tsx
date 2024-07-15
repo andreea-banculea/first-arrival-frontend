@@ -89,11 +89,6 @@ export function ReportEmergencyStackAmbulance() {
   return (
     <AmbulanceStack.Navigator>
       <AmbulanceStack.Screen
-        name="Submit Emergency"
-        component={SubmitEmergencyScreen}
-        options={{ headerShown: false }}
-      />
-      <AmbulanceStack.Screen
         name="Ambulance"
         component={AmbulanceScreen}
         options={{ headerShown: false }}

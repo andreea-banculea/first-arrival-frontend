@@ -1,6 +1,7 @@
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext, useState, useEffect } from "react";
 import { EmergencyType } from "../types/Emergency";
 import { useHasAnActiveEmergencyReported } from "../report/hooks/useHasAnActiveEmergencyReported";
+import { useUser } from "./UserContext";
 
 interface EmergencyContextType {
   emergency: EmergencyType | null | undefined;
@@ -12,7 +13,12 @@ interface EmergencyContextType {
 const EmergencyContext = createContext<EmergencyContextType | undefined | null>(undefined);
 
 export const EmergencyProvider = ({ children }: { children: ReactNode }) => {
-  const { emergency, emergencyError, emergencyLoading, refetch } = useHasAnActiveEmergencyReported();
+  const { user, loading: userLoading } = useUser();
+
+  // Only fetch emergency data if the user is defined and not loading
+  const shouldFetch = !!user && !userLoading;
+
+  const { emergency, emergencyError, emergencyLoading, refetch } = useHasAnActiveEmergencyReported(shouldFetch);
 
   return (
     <EmergencyContext.Provider value={{ emergency, emergencyError, emergencyLoading, refetch }}>
